@@ -45,4 +45,6 @@ public class SecurityConfiguration {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         return encoder;
     }
+
+    
 }
