@@ -4,6 +4,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,18 +35,18 @@ public class AccountTransactionController {
 	}
 	
 	@GetMapping("/findByAccountNumber/{accountNo}")
-	public List<AccountTransaction> getAccountByAccountNumber(@PathVariable("accountNo") String accountNo) {
-		return accountService.findByAccountNumber(accountNo);
+	public List<AccountTransaction> getAccountByAccountNumber(@PathVariable("accountNo") String accountNo, Pageable pageable) {
+		return accountService.findByAccountNumber(accountNo, pageable);
 	}
 	
 	@GetMapping("/findByCustomerId/{customerId}")
-	public List<AccountTransaction> getAccountByCustomerId(@PathVariable("customerId") String customerId) {
-		return accountService.findByCustomerId(customerId);
+	public List<AccountTransaction> getAccountByCustomerId(@PathVariable("customerId") String customerId, Pageable pageable) {
+		return accountService.findByCustomerId(customerId, pageable);
 	}
 	
 	@GetMapping("/findByDescription/{description}")
-	public List<AccountTransaction> getAccountByDescription(@PathVariable("description") String description) {
-		return accountService.findByDescription(description);
+	public List<AccountTransaction> getAccountByDescription(@PathVariable("description") String description, Pageable pageable) {
+		return accountService.findByDescription(description, pageable);
 	}
 	
 	@PutMapping("/update/")

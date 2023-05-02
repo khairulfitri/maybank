@@ -2,12 +2,12 @@ package com.maybank.demo.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.maybank.demo.entities.AccountTransaction;
@@ -20,11 +20,12 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 
 	@Autowired
 	AccountTransactionRepository accountRepository;
-	
 
 	@Override
-	public List<AccountTransaction> findByAccountNumber(String accountNo) {
-		List<AccountTransaction> result = accountRepository.findByAccountNumber(accountNo);
+	public List<AccountTransaction> findByAccountNumber(String accountNo, Pageable pageable) {
+		logger.debug("findByAccountNumber : {}, pageable : {}", accountNo, pageable);
+		
+		List<AccountTransaction> result = accountRepository.findByAccountNumber(accountNo, pageable);
 		
 		if (result.size() > 0 )
 			return result;
@@ -39,8 +40,10 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 	}
 
 	@Override
-	public List<AccountTransaction> findByCustomerId(String customerId) {
-		List<AccountTransaction> result = accountRepository.findByCustomerId(customerId);
+	public List<AccountTransaction> findByCustomerId(String customerId, Pageable pageable) {
+		logger.debug("findByCustomerId : {}, pageable : {}", customerId, pageable);
+
+		List<AccountTransaction> result = accountRepository.findByCustomerId(customerId, pageable);
 		
 		if (result.size() > 0 )
 			return result;
@@ -55,8 +58,10 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 	}
 
 	@Override
-	public List<AccountTransaction> findByDescription(String description) {
-		List<AccountTransaction> result = accountRepository.findByDescription(description);
+	public List<AccountTransaction> findByDescription(String description, Pageable pageable) {
+		logger.debug("findByDescription : {}, pageable : {}", description, pageable);
+
+		List<AccountTransaction> result = accountRepository.findByDescription(description, pageable);
 		
 		if (result.size() > 0 )
 			return result;
@@ -72,8 +77,8 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 	@Override
 	public AccountTransaction updateAccount(AccountTransaction account) {
 		logger.debug("accountString : {} ", account.toString());
-		AccountTransaction retrievedAccount;
 
+		AccountTransaction retrievedAccount;
 		
 		Optional<AccountTransaction> getAccount = accountRepository.findById(account.getId());
 		if (getAccount.isPresent()) {
@@ -90,4 +95,6 @@ public class AccountTransactionServiceImpl implements AccountTransactionService 
 			return retrievedAccount;
 		}
 	}
+
+
 }

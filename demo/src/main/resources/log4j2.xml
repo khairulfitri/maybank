@@ -7,7 +7,7 @@
         </Console>
 
         <RollingFile name="RollingFile"
-            fileName="./logs/api.log"
+            fileName="./logs/demo.log"
             filePattern="./logs/$${date:yyyy-MM}/api-%d{-dd-MMMM-yyyy}-%i.log.gz">
             <PatternLayout pattern="%d %p %C [%t] %m%n" charset="UTF-8"/>
             <Policies>
@@ -30,7 +30,6 @@
 
         <!-- LOG "com.maybank*" at TRACE level -->
         <Logger name="com.maybank" level="trace"></Logger>
-        <logger name="org.springframework.boot.SpringApplication" level="info"></logger>
     </Loggers>
 
 </Configuration>
