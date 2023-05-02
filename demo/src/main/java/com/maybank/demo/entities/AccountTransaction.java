@@ -6,8 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="account")
-public class Account {
+@Table(name="account_transaction")
+public class AccountTransaction {
 	
 	@Id
 	@Column(name="id")
