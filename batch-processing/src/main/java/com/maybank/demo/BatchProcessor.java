@@ -12,6 +12,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +40,8 @@ public class BatchProcessor {
 	private static EntityManager em;
 
 	public static void main(String[] args) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("AccountPU");
+		logger.debug("Start transaction");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("AccountTransactionPU");
 		em = emf.createEntityManager();
 
 		Properties prop = loadProperties();
@@ -49,6 +53,8 @@ public class BatchProcessor {
 		} catch (IOException e) {
 			logger.error("Error processing file : {}", e.toString());
 		}
+		
+		logger.debug("End transaction");
 	}
 
 	private static void processFile(Properties prop) throws NumberFormatException, IOException {
@@ -66,7 +72,7 @@ public class BatchProcessor {
 			if (matcher.find()) { 
 				validLine++;
 				
-				Account account = new Account(Long.valueOf(matcher.group(1)), 
+				AccountTransaction account = new AccountTransaction(Long.valueOf(matcher.group(1)), 
 						Long.valueOf(matcher.group(6)), 
 						Double.valueOf(matcher.group(2)), 
 						matcher.group(3),
@@ -84,7 +90,7 @@ public class BatchProcessor {
 		logger.debug("Invalid line : {}", invalidLine);
 	}
 
-	private static void createAccount(Account acct) {
+	private static void createAccount(AccountTransaction acct) {
 		em.getTransaction().begin();
 		em.persist(acct);
 		em.getTransaction().commit();
@@ -115,7 +121,6 @@ public class BatchProcessor {
 		Properties prop = new Properties();
 		prop.setProperty(FILE_LOCATION_PROP_NAME, DEFAULT_FILE_LOCATION);
 		prop.setProperty(FILE_NAME_PROP_NAME, DEFAULT_FILE_NAME);
-
 		return prop;
 	}
 }

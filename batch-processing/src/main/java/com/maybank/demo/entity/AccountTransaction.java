@@ -8,10 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="account")
-public class Account {
+@Table(name="account_transaction")
+public class AccountTransaction {
 	
-	public Account(Long accountNumber, Long customerId, Double transactionAmount, String description,
+	public AccountTransaction(Long accountNumber, Long customerId, Double transactionAmount, String description,
 			String transactionDate) {
 		super();
 		this.accountNumber = accountNumber;
